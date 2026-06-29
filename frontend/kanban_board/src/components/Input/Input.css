@@ -14,11 +14,12 @@ input {
 }
 
 .error-message {
-    color: red;
+    color: #b91c1c;
     font-size: "0.75rem";
     margin-top: "4px";      
     min-height: "1.2em";
     margin-left: 8px;
+    font-weight: 500;
 }
 
 label {
