@@ -1,0 +1,28 @@
+button {
+    border: 2px solid #1a1c1c;
+    font-family: "Inter", 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    cursor: pointer;
+    margin: 16px 0;
+}
+
+.large {
+    width: 368px;
+    height: 56px;
+    padding: 16px 0px;
+    font-size: large;
+    color: #FFFFFF;
+}
+
+.medium {
+    width: 215px;
+    height: 52px;
+    font-size: medium;
+    color: #FFFFFF;
+    padding: 12px 0px;
+}
+.small {
+    width: 116px;
+    height: 40px;
+    padding: 8px 24px;
+    border-radius: 4px;
+}
