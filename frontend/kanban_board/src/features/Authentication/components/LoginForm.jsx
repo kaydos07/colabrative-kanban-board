@@ -41,7 +41,7 @@ export default function LoginForm() {
           error={errors.password?.message}
         />
         <Button type="submit" color="#6d5e00" size="large">
-          LOGIN <i className="fa-solid fa-arrow-right"></i>
+          LOG IN <i className="fa-solid fa-arrow-right"></i>
         </Button>
 
       </form>

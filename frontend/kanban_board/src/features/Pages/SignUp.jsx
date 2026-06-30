@@ -2,9 +2,10 @@ import React from "react";
 import { Link } from "react-router";
 
 import { ArrowIcon } from "../../components/Icon/miniIcon";
-import LoginForm from "../Authentication/components/LoginForm";
+import LoginForm from "../Authentication/components/SignUpForm";
+import SignUpForm from "../Authentication/components/SignUpForm";
 
-export function Login() {
+export function SignUp() {
   return (
     <>
       <div className="w-screen h-screen flex items-center justify-center flex-col relative gap-0">
@@ -23,20 +24,18 @@ export function Login() {
             <i className="fa-solid fa-thumbtack opacity-40"></i>
           </div>
           <h2 className="w-93 font-medium text-3xl text-[#1a1c1c] text-left">
-            Welcome Back
+            Welcome to WallBoard
           </h2>
           <span className="w-93 m-8">
-            <LoginForm />
+            <SignUpForm />
           </span>
-          <div className="w-92 border border-[#C0A535]"></div>
-          <p className="mt-10 text-[#4b4734] font-bold">
-            Don't have an account?{" "}
-            <Link to="/signup">
-              <span className="text-[#006686]">Sign up</span>
-            </Link>
-          </p>
+          <div className="flex flex-row justify-between items-center gap-1 -mt-2">
+            <div className="w-40 h-px border border-[#C0A535]"></div>
+            <p>Other</p>
+            <div className="w-40 h-px border border-[#C0A535]"></div>
+          </div>
           <Link to="/google">
-            <div className="size-12 bg-[#FFFFFF] rounded-xl flex justify-center items-center mt-5">
+            <div className="size-12 bg-[#FFFFFF] rounded-xl flex justify-center items-center mt-4">
               <img
                 className="size-3/4"
                 src="../../google.svg"

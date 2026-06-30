@@ -6,7 +6,7 @@ import "./index.css";
 
 import App from "./App.jsx";
 import { Login } from "./features/Pages/Login";
-// import { SignUp } from "./features/Pages/SignUp";
+import { SignUp } from "./features/Pages/SignUp";
 // import { NoteFound } from "./features/Pages/NoteFound";
 
 const router = createBrowserRouter([
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     element: <App />,
   },
   { path: "/login", element: <Login /> },
-  // { path: "/signup", element: <SignUp /> },
+  { path: "/signup", element: <SignUp /> },
   // {path: "*", element: <NoteFound />}
 ]);
 
