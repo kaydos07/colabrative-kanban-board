@@ -8,12 +8,12 @@ class Settings(BaseSettings):
 
     DATABASE_URL: str
 
-    # JWT_SECRET_KEY: str
-    # JWT_ALGORITHM: str
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
+    SECRET_KEY: str
+    ALGORITHM: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int
     REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7
 
-    # STRIP_SECRET_KEY: str
+    # STRIPe_SECRET_KEY: str
     STRIPE_PUBLISHABLE_KEY: str | None = None
 
     model_config = SettingsConfigDict(
