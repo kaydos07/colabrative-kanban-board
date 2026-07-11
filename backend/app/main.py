@@ -1,16 +1,9 @@
-from fastapi import FastAPI, Depends, status
+from fastapi import FastAPI,status
 from sqlalchemy.orm import Session
-from app.api.core.database import get_db, engine, Base
 from contextlib import asynccontextmanager
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import OAuth2PasswordBearer
-from typing import Annotated
-
-from .api.models.user import User
-
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+from app.api.v1.auth import router as auth_router
 
 
 @asynccontextmanager  
@@ -28,9 +21,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth_router, prefix="/api/v1")
 
-
-@app.get("/health")
-def health_check(db: Annotated[Session, Depends(get_db)], token: Annotated[str, Depends(oauth2_scheme)] = None):
-    # If this completes without raising an exception, your session maker works!
+@app.get("/")
+def health_check():
     return JSONResponse(content={"status": "healthy", "database": "connected"}, status_code=status.HTTP_200_OK)
