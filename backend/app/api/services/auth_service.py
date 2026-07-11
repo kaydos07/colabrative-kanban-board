@@ -34,5 +34,5 @@ def login_user(form_data: OAuth2PasswordRequestForm, db: Session):
             raise HTTPException(status_code=400, detail="Incorrect username or password")
         if not verify_password(form_data.password, user.hashed_password):
             raise HTTPException(status_code=400, detail="Incorrect username or password")
-        token = create_access_token(data={"sub": {user.username}})
+        token = create_access_token(data={"sub": user.username})
         return {"access_token": token, "token_type": "bearer"}

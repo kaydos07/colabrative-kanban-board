@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, status
 from app.api.core.database import get_db, engine, Base
 from jose import JWTError, jwt
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from fastapi.responses import JSONResponse
 from .config import settings
 from typing import Annotated
@@ -10,7 +10,6 @@ import bcrypt
 
 
 def hashed_password(password: str) -> str:
-    """Securely hash a plain text password string."""
     # Convert string to bytes, generate salt, and hash
     password_bytes = password.encode("utf-8")
     salt = bcrypt.gensalt()
@@ -18,24 +17,17 @@ def hashed_password(password: str) -> str:
     return hashed_bytes.decode("utf-8")
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    """Verify a plain text password against an existing database hash."""
     return bcrypt.checkpw(
         plain_password.encode("utf-8"),
         hashed_password.encode("utf-8")
     )
 
-# def hased_password(password: str):
-#     return brycpt_context.hash(password)
-
-# def verify_password(plain_password, hashed_password):
-#     return brycpt_context.verify(plain_password, hashed_password)
-
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
     if expires_delta:
-        expire = datetime.now(datetime.timezone.utc) + expires_delta
+        expire = datetime.now(timezone.utc) + expires_delta
     else:
-        expire = datetime.now(datetime.timezone.utc) + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+        expire = datetime.now(timezone.utc) + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
