@@ -9,7 +9,6 @@ from typing import Annotated
 from ..schemas.user import UserCreate
 from ..models.user import User
 from ..core.security import verify_password, create_access_token, hashed_password
-from ..services.auth_service import create_user
 
 
 
