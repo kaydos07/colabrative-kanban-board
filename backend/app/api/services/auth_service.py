@@ -14,10 +14,10 @@ from ..core.security import hased_password
 
 def create_user(form_data: UserCreate, db: Session): 
     existing_username = db.query(User).filter(User.username == form_data.username).first()
-    if not existing_username:
+    if existing_username:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Username already registered")
     existing_email = db.query(User).filter(User.email == form_data.email).first()
-    if not existing_email:
+    if existing_email:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email already registered")
     db_user = User(
         username = form_data.username,
