@@ -2,21 +2,33 @@ from fastapi import FastAPI, Depends, status
 from app.api.core.database import get_db, engine, Base
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
-from passlib.context import CryptContext
 from fastapi.responses import JSONResponse
 from .config import settings
-from fastapi.security import OAuth2PasswordBearer
 from typing import Annotated
 from ..models.user import User
+import bcrypt
 
-brycpt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+def hashed_password(password: str) -> str:
+    """Securely hash a plain text password string."""
+    # Convert string to bytes, generate salt, and hash
+    password_bytes = password.encode("utf-8")
+    salt = bcrypt.gensalt()
+    hashed_bytes = bcrypt.hashpw(password_bytes, salt)
+    return hashed_bytes.decode("utf-8")
 
-def hased_password(password: str):
-    return brycpt_context.hash(password)
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    """Verify a plain text password against an existing database hash."""
+    return bcrypt.checkpw(
+        plain_password.encode("utf-8"),
+        hashed_password.encode("utf-8")
+    )
 
-def verify_password(plain_password, hashed_password):
-    return brycpt_context.verify(plain_password, hashed_password)
+# def hased_password(password: str):
+#     return brycpt_context.hash(password)
+
+# def verify_password(plain_password, hashed_password):
+#     return brycpt_context.verify(plain_password, hashed_password)
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()

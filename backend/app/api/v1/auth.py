@@ -11,20 +11,14 @@ from typing import Annotated
 from ..schemas.auth import Token
 from ..models.user import User
 from ..schemas.user import UserResponse, UserCreate
-from ..core.security import hased_password, verify_password, create_access_token
-from ..services.auth_service import create_user
+from ..services.auth_service import create_user, login_user
 
 router = APIRouter(prefix="/auth", tags=["authentication"])
 
 @router.post("/login", response_model = Token)
 def login_for_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Annotated[Session, Depends(get_db)]):
-        user = db.query(User).filter(User.username == form_data.username).first()
-        if not user: 
-            raise HTTPException(status_code=400, detail="Incorrect username or password")
-        if not verify_password(FormData.password, user.hashed_password):
-            raise HTTPException(status_code=400, detail="Incorrect username or password")
-        token = create_access_token(data={"sub": {user.username}})  
-        
+        token = login_user(form_data=form_data, db=db)
+        return token
         
 @router.post("/signup", response_model=UserResponse)
 def sign_up(form_data: UserCreate, db: Annotated[Session, Depends(get_db)]):

@@ -1,14 +1,15 @@
-from fastapi import FastAPI, Depends, status, HTTPException
+from fastapi import FastAPI, status, HTTPException
 from sqlalchemy.orm import Session
 from app.api.core.database import get_db, engine, Base
 from contextlib import asynccontextmanager
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from typing import Annotated
 from ..schemas.user import UserCreate
 from ..models.user import User
-from ..core.security import hased_password
+from ..core.security import verify_password, create_access_token, hashed_password
+from ..services.auth_service import create_user
 
 
 
@@ -21,10 +22,18 @@ def create_user(form_data: UserCreate, db: Session):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email already registered")
     db_user = User(
         username = form_data.username,
-        hashed_password = hased_password(form_data.password),
+        hashed_password = hashed_password(form_data.password),
         email = form_data.email
     )
     db.add(db_user)
     db.commit()
     return db_user
-    
+
+def login_user(form_data: OAuth2PasswordRequestForm, db: Session):
+        user = db.query(User).filter(User.username == form_data.username).first()
+        if not user: 
+            raise HTTPException(status_code=400, detail="Incorrect username or password")
+        if not verify_password(form_data.password, user.hashed_password):
+            raise HTTPException(status_code=400, detail="Incorrect username or password")
+        token = create_access_token(data={"sub": {user.username}})
+        return {"access_token": token, "token_type": "bearer"}
