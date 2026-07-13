@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1.auth import router as auth_router
+from app.api.v1.users import router as user_router
 
 
 @asynccontextmanager  
@@ -22,6 +23,7 @@ app.add_middleware(
 )
 
 app.include_router(auth_router, prefix="/api/v1")
+app.include_router(user_router, prefix="/api/v1")
 
 @app.get("/")
 def health_check():

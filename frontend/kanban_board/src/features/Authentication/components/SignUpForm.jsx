@@ -2,6 +2,7 @@ import React from "react";
 import Input from "../../../components/Input/Input";
 import Button from "../../../components/Button/Button";
 import { useForm } from "react-hook-form";
+import { AuthAPI } from "../services/AuthApi";
 
 export default function SignUpForm() {
   const {
@@ -10,21 +11,26 @@ export default function SignUpForm() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("form data: ", data);
+  const onSubmit = async (data) => {
+    try {
+      const response = await AuthAPI.signUp(data);
+      console.log(response);
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
-          label="FullName"
+          label="Username"
           type="text"
           placeholder="YourName123"
-          {...register("FullName", {
-            required: "FullName is required",
+          {...register("username", {
+            required: "username is required",
           })}
-          error={errors.FullName?.message}
+          error={errors.username?.message}
         />
         <Input
           label="Email"
@@ -50,10 +56,9 @@ export default function SignUpForm() {
           error={errors.password?.message}
         />
         <Button type="submit" color="#007241" size="large">
-          SIGN UP <i class="fa-solid fa-arrow-right"></i>
+          SIGN UP <i className="fa-solid fa-arrow-right"></i>
         </Button>
       </form>
-        
     </>
   );
 }

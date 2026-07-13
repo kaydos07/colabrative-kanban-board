@@ -2,6 +2,8 @@ import React from "react";
 import Input from "../../../components/Input/Input";
 import Button from "../../../components/Button/Button";
 import { useForm } from "react-hook-form";
+import { AuthAPI } from "../services/AuthApi";
+import { useAuth } from "../../../context/AuthContext";
 
 export default function LoginForm() {
   const {
@@ -9,26 +11,28 @@ export default function LoginForm() {
     register,
     formState: { errors },
   } = useForm();
+  const { login } = useAuth();
 
-  const onSubmit = (data) => {
-    console.log("form data: ", data);
+  const onSubmit = async (data) => {
+    try {
+      const response = await AuthAPI.logIn(data);
+      console.log(response)
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
-          label="Email"
+          label="Username"
           type="text"
-          placeholder="email@gmail.com"
-          {...register("email", {
-            required: "Email is required",
-            pattern: {
-              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-              message: "Invalid email",
-            },
+          placeholder="YourName123"
+          {...register("username", {
+            required: "username is required",
           })}
-          error={errors.email?.message}
+          error={errors.username?.message}
         />
         <Input
           label="Password"
@@ -43,7 +47,6 @@ export default function LoginForm() {
         <Button type="submit" color="#6d5e00" size="large">
           LOG IN <i className="fa-solid fa-arrow-right"></i>
         </Button>
-
       </form>
     </>
   );
