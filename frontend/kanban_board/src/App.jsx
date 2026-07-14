@@ -1,7 +1,7 @@
-import { Login } from "./features/Pages/Login";
+import Workspace from "./features/Pages/WorkSpace";
 
 export default function App() {
   return (
-    <Login/>
+    <Workspace/>
   );
 }
