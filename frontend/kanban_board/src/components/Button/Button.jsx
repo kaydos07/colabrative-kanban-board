@@ -8,6 +8,7 @@ export default function Button({
   color,
   handleClick,
   size,
+  className,
   ...props
 }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -45,7 +46,7 @@ export default function Button({
       onMouseUp={HandleClickAnimation}
       style={style}
       onClick={handleClick}
-      className={`${size}`}
+      className={`${size} ${className}`}
       {...props}
     >
       {children}

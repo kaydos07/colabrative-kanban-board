@@ -2,7 +2,7 @@ import "./Input.css";
 import { forwardRef } from "react";
 
 const Input = forwardRef(
-  ({ style, label, type = "text", error, ...props }, ref) => {
+  ({ style, label, type = "text", error, className, ...props }, ref) => {
     const errorVisible = error
       ? { visibility: "visible" }
       : { visibility: "hidden" };
@@ -12,7 +12,7 @@ const Input = forwardRef(
 
         <input
           style={style}
-          className="input-form"
+          className={`input-form ${className || ""}`}
           type={type}
           ref={ref}
           {...props}

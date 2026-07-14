@@ -11,7 +11,7 @@ export const StickyNote = ({ content, duetime, position}) => {
   };
 
   return (
-    <div className="bg-amber-400 w-80 h-50 p-5 absolute top-50 left-50 flex justify-between flex-col gap-1">
+    <div className="bg-amber-400 w-80 h-50 p-5 absolute top-50 left-50 flex justify-between flex-col gap-1 -z-1">
       <div className="flex justify-between items-center w-full h-5">
         <i className="fa-solid fa-note-sticky"></i>
         {!isChecked ? (
