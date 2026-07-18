@@ -13,3 +13,5 @@ class User(Base):
     is_admin = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), server_default = func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+    
+    notes = relationship("Note", back_populates="owner", cascade="all, delete_orphan")

@@ -33,7 +33,7 @@ export function Login() {
             Don't have an account?{" "}
             <Link to="/signup">
               <span className="text-[#006686]">Sign up</span>
-            </Link>
+            </Link> 
           </p>
           <Link to="/google">
             <div className="size-12 bg-[#FFFFFF] rounded-xl flex justify-center items-center mt-5">
