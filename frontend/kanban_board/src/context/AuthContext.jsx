@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
     const fetchUser = async () => {
       if (!token) {
@@ -23,7 +24,7 @@ export const AuthProvider = ({ children }) => {
         return;
       }
       try {
-        const response = clientAPI.get("/users/me");
+        const response = await clientAPI.get("/users/me");
         setUser((user) => response.data);
       } catch (err) {
         console.error("Authentication failed: ", err);
@@ -54,7 +55,6 @@ export const AuthProvider = ({ children }) => {
         user,
         loading,
         isAuthenticated: !!token,
-        loading,
       }}
     >
       {!loading && children}

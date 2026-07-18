@@ -4,6 +4,7 @@ import Button from "../../../components/Button/Button";
 import { useForm } from "react-hook-form";
 import { AuthAPI } from "../services/AuthApi";
 import { useAuth } from "../../../context/AuthContext";
+import { useNavigate } from "react-router";
 
 export default function LoginForm() {
   const {
@@ -12,11 +13,13 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm();
   const { login } = useAuth();
+  const navigate = useNavigate()
 
   const onSubmit = async (data) => {
     try {
       const response = await AuthAPI.logIn(data);
-      console.log(response)
+      login(response.access_token)
+      navigate("/")
     } catch (err) {
       alert(err.message);
     }
@@ -44,7 +47,7 @@ export default function LoginForm() {
           })}
           error={errors.password?.message}
         />
-        <Button type="submit" color="#6d5e00" size="large">
+        <Button  type="submit" color="#6d5e00" size="large">
           LOG IN <i className="fa-solid fa-arrow-right"></i>
         </Button>
       </form>

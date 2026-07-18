@@ -1,16 +1,18 @@
 import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import profilePic from "../../assets/userProfilePicTest.jpg";
-import { useAuth } from "../../context/AuthContext";
 import { Modal } from "../Modal/Modal";
+import { Link } from "react-router";
 
 export default function NavBar({ props }) {
   const [isModalOpened, setIsModalOpened] = useState(false);
+  const { user } = useAuth();
 
   const handleClick = () => {
-    setIsModalOpened(modal => !modal)
+    setIsModalOpened((modal) => !modal);
   };
   return (
     <>
@@ -24,19 +26,35 @@ export default function NavBar({ props }) {
           </ul>
         </span>
         <span className="flex items-center justify-around gap-5">
-          <Button className="text-[#1a1a1a]" handleClick={handleClick} size="small" color={"#FDE047"}>
+          <Button
+            className="text-[#1a1a1a]"
+            handleClick={handleClick}
+            size="small"
+            color={"#FDE047"}
+          >
             + Add Note
           </Button>
           <Input placeholder="Search notes..."></Input>
           <i className="fa-solid fa-gear"></i>
           <i className="fa-solid fa-bell"></i>
-          <img
-            className="object-fill rounded-full size-11 mr-2"
-            src={profilePic}
-          ></img>
+          {user ? (
+            <img
+              className="object-fill rounded-full size-11 mr-2"
+              src={profilePic}
+            ></img>
+          ) : (
+            <Link to={"/login"}>
+              <Button size="small" className="border-none! shadow-none!">
+                Sign in
+              </Button>
+            </Link>
+          )}
         </span>
       </nav>
-      <Modal isOpened={isModalOpened} onClose={() => setIsModalOpened(modal => !modal)}></Modal>
+      <Modal
+        isOpened={isModalOpened}
+        onClose={() => setIsModalOpened((modal) => !modal)}
+      ></Modal>
     </>
   );
 }
