@@ -2,6 +2,9 @@ from sqlalchemy import Column, DateTime, Integer, String, Boolean, ForeignKey
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from ..core.database import Base
+from .board_members import board_members
+
+
 
 class User(Base):
     __tablename__ = "user"
@@ -13,5 +16,7 @@ class User(Base):
     is_admin = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), server_default = func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+    
+    boards = relationship("Board", secondary="board_members", back_populates="members")
     
     notes = relationship("Note", back_populates="owner", cascade="all, delete-orphan")

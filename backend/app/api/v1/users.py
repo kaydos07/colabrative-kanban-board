@@ -15,8 +15,3 @@ router = APIRouter(prefix="/users", tags=["user"])
 @router.get("/me", response_model=UserBase)
 def current_user(current_user: Annotated[User, Depends(get_current_user)]):
     return current_user
-
-@router.post("/create_note", response_model=NoteResponse, status_code = status.HTTP_201_CREATED)
-def create_note(current_user: Annotated[User, Depends(get_current_user)], db: Annotated[Session, Depends(get_db)], note: NoteRequest):
-    new_note = create_new_note(current_user.id, db, note) 
-    return new_note
