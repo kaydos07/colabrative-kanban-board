@@ -16,7 +16,7 @@ class NoteBase(BaseModel):
     content: str
     progress: str = "To Do"
     is_done: bool = False
-    position = Optional[NotePosition] =  NotePosition()
+    position: Optional[NotePosition] =  NotePosition()
 
 
     model_config = {"from_attributes": True}

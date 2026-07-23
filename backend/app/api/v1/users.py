@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 from typing import Annotated
 from ..models.user import User
 from ..schemas.user import UserBase
-from ..schemas.note import NoteRequest, NoteResponse
+from ..schemas.note import  NoteResponse
 from app.deps import get_current_user
 from ..services.board_service import create_new_note
 

@@ -1,11 +1,11 @@
 from sqlalchemy.orm import Session
 from ..models import User, Note, Board
-from ..schemas.note import NoteRequest, NoteResponse, NoteUpdate
+from ..schemas.note import NoteResponse, NoteUpdate
 from fastapi import HTTPException, status
 
 
 
-def create_new_note(board_id: int, user_id: int,  db: Session, note: NoteRequest):
+def create_new_note(board_id: int, user_id: int,  db: Session, note: NoteResponse):
     new_note = Note(
         title = note.title,
         content = note.content,
